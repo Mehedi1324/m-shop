@@ -24,7 +24,7 @@ async function run() {
     const mostSellingCollections = database.collection('most_sellings');
     const topSellingCollections = database.collection('top_selling');
     const topTrendingCollections = database.collection('top_trending');
-    const cardCollection = database.collection('card_products');
+    const buyerInfo = database.collection('buyer_info');
 
     // Getting latest_collections from mongodb
     app.get('/latest_collections', async (req, res) => {
@@ -41,9 +41,10 @@ async function run() {
       const query = { _id: ObjectId(id) };
       const productCol =
         (await latestCollections.findOne(query)) ||
-        (await mostSellingCollections.findOne(query)) ||
-        (await topSellingCollections.findOne(query)) ||
-        (await topTrendingCollections.findOne(query));
+        mostSellingCollections.findOne(query) ||
+        topSellingCollections.findOne(query) ||
+        topTrendingCollections.findOne(query);
+      console.log(productCol);
       res.send(productCol);
     });
 
@@ -70,6 +71,14 @@ async function run() {
       const products = await cursor.toArray();
 
       res.send(products);
+    });
+
+    // Posting buyer Information________________
+
+    app.post('/buyerInfo', async (req, res) => {
+      const data = req.body;
+      const result = await buyerInfo.insertMany(data);
+      res.json(result);
     });
   } finally {
     // await client.close();
