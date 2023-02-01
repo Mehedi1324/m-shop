@@ -8,9 +8,9 @@ require('dotenv').config();
 app.use(cors());
 app.use(express.json());
 
-// app.get('/', (req, res) => {
-//   res.send('hello from rode js');
-// });
+app.get('/', (req, res) => {
+  res.send('hello from rode js');
+});
 
 const { MongoClient, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.USER}:${process.env.KEY}@cluster0.cgyk5.mongodb.net/?retryWrites=true&w=majority`;
@@ -27,7 +27,7 @@ async function run() {
     const buyerInfo = database.collection('buyer_info');
 
     // Getting latest_collections from mongodb
-    app.get('/', async (req, res) => {
+    app.get('/latest_collections', async (req, res) => {
       const cursor = latestCollections.find({});
       const products = await cursor.toArray();
 
