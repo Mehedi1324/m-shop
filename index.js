@@ -13,7 +13,7 @@ app.get('/', (req, res) => {
 });
 
 const { MongoClient, ObjectId } = require('mongodb');
-const uri = `mongodb+srv://${process.env.USER}:${process.env.KEY}@cluster0.cgyk5.mongodb.net/?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_KEY}@cluster0.cgyk5.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri);
 
 async function run() {
